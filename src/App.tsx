@@ -1,5 +1,4 @@
-import TextInput from "./components/inputs/TextInput/TextInput"
-import ModuleLabel from "./components/labels/ModuleLabel/ModuleLabel"
+// import ModuleLabel from "./components/labels/ModuleLabel/ModuleLabel"
 import CourseGenPage from "./components/pages/CourseGenPage/CourseGenPage"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 function App() {
@@ -8,8 +7,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-        <Route path="/d" element={<CourseGenPage/>} />
-          <Route path="/" element={<ModuleLabel title="Существа" duration={2} />} />
+        <Route path="/" element={<CourseGenPage/>} />
+          {/* <Route path="/" element={<ModuleLabel title="Существа" duration={2} />} /> */}
         </Routes>
      </BrowserRouter>
     </>

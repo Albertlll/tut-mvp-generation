@@ -1,17 +1,15 @@
-import { useState } from "react";
 import FileLabel from "../../labels/FileLabel/FileLabel";
-import { Ifile } from "../../pages/CourseGenPage/CourseGenPage";
+import useStore from "../../../store/store";
+function FilesList() {
 
-function FilesList(props : {files: Array<Ifile>}) {
-
-
+    const {files} = useStore()
 
     return (
-        <ul className="flex gap-2 w-full flex-wrap mt-4">
+        <ul className="flex gap-2 w-full flex-wrap my-6">
             {
-                props.files.map((file, index) => (
+                files.map((file, index) => (
                     <li key={index} className="max-w-full">
-                        <FileLabel filename={file.name} />
+                        <FileLabel index={index} filename={file.name} />
                     </li>
                 )) 
             }
