@@ -1,13 +1,27 @@
 import TextInput from "../../inputs/TextInput/TextInput";
 import FilesList from "../../widgets/FilesList/FilesList";
 import Button from "../../inputs/Button/Button";
-import useStore from "../../../store/store";
-
+import useStore, { ICourse } from "../../../store/store";
+import axios from "axios";
+import { httpClient } from "../../../api/httpClient";
+import { data, useNavigate } from "react-router-dom";
+import { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
 
 function CourseGenPage() {
 
 
-    const { addFile, files} = useStore();
+    const { addFile, files, setGeneratedCourse} = useStore();
+
+
+    const [courseName, setCourseName] = useState<string>('');
+    const [courseDuration, setCourseDuration] = useState<number>(0);
+    const [courseDescription, setCourseDescription] = useState<string>('');
+
+    const [isGenerationStarted, setIsGenerationStarted] = useState<boolean>(false);
+
+
+
+    const navigate = useNavigate()
 
 
     
@@ -26,22 +40,119 @@ function CourseGenPage() {
             }
         )
     };
+
+
+    const handleSendPrompt = () => {
+
+
+        console.log(courseName)
+        console.log(courseDuration)
+        console.log(courseDescription)
+
+        
+        setIsGenerationStarted(true);
+
+        httpClient.post('/api/v1/courses/generate', 
+            {
+                title : courseName,
+                hours_count : courseDuration,
+                description : courseDescription,
+                document : ''
+            }
+        )
+        .then((response) => {
+
+            const generated = response.data
+
+
+            const newCourse : ICourse = {
+                courseName : generated.course_title,
+                durationHours : generated.hours_count,
+                modules : generated.modules_info.modules.map((value : {module_title : string, module_description : string, module_hours_count : number}) => {
+                    return {
+                        moduleTitle : value.module_title,
+                        durationHours : value.module_hours_count,
+                        moduleDescription : value.module_description,
+                        lessons : []
+                    }
+                }),
+                additionalInfo : ''
+
+            };
+
+
+            setGeneratedCourse(newCourse);
+
+            navigate("/generated");
+
+
+            console.log(response)
+
+        })
+        .catch((error) => {
+            console.log(error);
+            // setGeneratedCourse();
+
+            navigate("/generated");
+
+        });
+
+
+    };
+
+
+
+
+
+
+        function isNumberKey(evt: React.KeyboardEvent<HTMLInputElement>): boolean {
+            const charCode = evt.key
+
+            console.log(charCode)
+            return !isNaN(Number(charCode)) || charCode === 'Backspace'
+            // return !(charCode > 31 && (charCode < 48 || charCode > 57)); 
+
+            return true;
+        }
       
 
 
 
 
     return (
-        <div className=" p-10 relative m-auto shadow-[0px_0px_50px_rgba(64,143,255,0.5)] rounded-[30px] max-w-[800px] bg-white mt-10">
+        <div className=" box-border p-10 relative m-auto shadow-[0px_0px_50px_rgba(64,143,255,0.5)] rounded-[30px] max-w-[800px] bg-white top-10">
             
             
             
-            <div className="">
-                <TextInput placeholder="Название"/>
+            <TextInput onChange={(e : ChangeEvent<HTMLInputElement>) => {setCourseName(e.target.value)}} type="text" placeholder="Название"/>
+
+            
+            <div className="mt-4">
+            <TextInput onChange={(e : ChangeEvent<HTMLInputElement>) => {
+
+                setCourseDuration(Number(e.target.value))
+            
+            }
+
+            
+            
+            
+            }
+            
+            onKeyDown={(e : KeyboardEvent<HTMLInputElement>) => {
+                if (!isNumberKey(e)) {
+                    e.preventDefault();
+                }
+            }}
+            
+            placeholder="Длительность курса" />
+
             </div>
 
+
+
             <div className="mt-4 flex justify-center gap-2">
-                <TextInput placeholder="Дополнительно"/>
+                <TextInput onChange={(e : ChangeEvent<HTMLInputElement>) => {setCourseDescription(e.target.value)}} type="text" placeholder="Дополнительно"/>
 
                 <input onChange={handleFileChange} accept=".txt, .docx, .pdf"  type="file" name="" id="fileUppload" className="hidden">
                 </input>
@@ -61,7 +172,7 @@ function CourseGenPage() {
 
 
             <div className="mt-4">
-            <Button text="Создать"/>
+                <Button onClick={handleSendPrompt} text="Создать" generating={isGenerationStarted}/>
             </div>
 
 

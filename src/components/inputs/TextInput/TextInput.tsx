@@ -1,7 +1,12 @@
-function TextInput(props : {placeholder: string}) {
+import { InputHTMLAttributes } from "react";
+
+type pr =  InputHTMLAttributes<HTMLInputElement>;
+
+
+function TextInput(props : pr) {
     return (
         <div className="w-full h-[67px] border-primary rounded-[25px] outline-none border-[3px]">
-            <input type="text" className=" outline-none border-none placeholder:text-[#A8CCFF] w-full h-full rounded-[25px] pl-[48px] text-primary text-[30px]" placeholder={props.placeholder}/>
+            <input {...props} className=" outline-none border-none placeholder:text-[#A8CCFF] w-full h-full rounded-[25px] pl-[48px] text-primary text-[25px]"/>
         </div>
     );
 }
