@@ -26,17 +26,17 @@ function GeneratedCoursePage() {
             <div className="mt-[39px]">
 
             {
-                generatedCourse.modules.map((module, index) => {
+                generatedCourse.modules.map((module, moduleIndex) => {
                     return (
-                        <div key={index} className="mb-3">
-                        <ModuleLabel moduleIndex={index} isLessonsGenered={module.lessons.length != 0} title={module.moduleTitle} duration={12}/>
+                        <div key={moduleIndex} className="mb-3">
+                        <ModuleLabel moduleIndex={moduleIndex} isLessonsGenered={module.lessons.length != 0} title={module.moduleTitle} duration={12}/>
 
                             <div className="mb-3 mt-3">
                                 {
-                                    module.lessons.map((lesson, index) => {
+                                    module.lessons.map((lesson, lessonIndex) => {
                                         return (
-                                            <div key={index} className="mt-2">
-                                            <LessonLabel key={index} title={lesson.lessonTitle} duration={2}/>
+                                            <div key={lessonIndex} className="mt-2">
+                                            <LessonLabel moduleIndex={moduleIndex} lessonIndex={lessonIndex} title={lesson.lessonTitle} duration={2}/>
 
                                             </div>
                                         )

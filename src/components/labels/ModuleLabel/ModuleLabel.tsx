@@ -16,7 +16,7 @@ export function ModuleLabelNotGenered(props : {title: string, duration: number, 
 
         console.log("Начал генерировать")
 
-        httpClient.post('/api/v1/lessons/batch-generate', 
+        httpClient.post('api/v1/modules/generate/structure', 
             {
                 module_title: generatedCourse.modules[props.moduleIndex].moduleTitle,
                 module_description : generatedCourse.modules[props.moduleIndex].moduleDescription,
@@ -34,11 +34,12 @@ export function ModuleLabelNotGenered(props : {title: string, duration: number, 
             const newCourse : ICourse = generatedCourse
 
             newCourse.modules[props.moduleIndex].lessons = generated.lessons.map(
-                (value : {lesson_title : string, lesson_minutes_count : number, content : string}) => {
+                (value : {lesson_title : string, lesson_minutes_count : number, description : string}) => {
                     return {
                         lessonTitle : value.lesson_title,
                         durationMinutes : value.lesson_minutes_count,
-                        lessonContent : value.content
+                        lessonDescription : value.description,
+                        lessonContent : ""
                     }
                 }
             )

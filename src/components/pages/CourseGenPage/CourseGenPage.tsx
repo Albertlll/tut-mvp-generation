@@ -2,10 +2,9 @@ import TextInput from "../../inputs/TextInput/TextInput";
 import FilesList from "../../widgets/FilesList/FilesList";
 import Button from "../../inputs/Button/Button";
 import useStore, { ICourse } from "../../../store/store";
-import axios from "axios";
 import { httpClient } from "../../../api/httpClient";
-import { data, useNavigate } from "react-router-dom";
-import { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
 
 function CourseGenPage() {
 
@@ -52,7 +51,7 @@ function CourseGenPage() {
         
         setIsGenerationStarted(true);
 
-        httpClient.post('/api/v1/courses/generate', 
+        httpClient.post('/api/v1/courses/generate/structure', 
             {
                 title : courseName,
                 hours_count : courseDuration,
@@ -105,19 +104,6 @@ function CourseGenPage() {
 
 
 
-        function isNumberKey(evt: React.KeyboardEvent<HTMLInputElement>): boolean {
-            const charCode = evt.key
-
-            console.log(charCode)
-            return !isNaN(Number(charCode)) || charCode === 'Backspace'
-            // return !(charCode > 31 && (charCode < 48 || charCode > 57)); 
-
-            return true;
-        }
-      
-
-
-
 
     return (
         <div className=" box-border p-10 relative m-auto shadow-[0px_0px_50px_rgba(64,143,255,0.5)] rounded-[30px] max-w-[800px] bg-white top-10">
@@ -128,7 +114,7 @@ function CourseGenPage() {
 
             
             <div className="mt-4">
-            <TextInput onChange={(e : ChangeEvent<HTMLInputElement>) => {
+            <TextInput type="number" onChange={(e : ChangeEvent<HTMLInputElement>) => {
 
                 setCourseDuration(Number(e.target.value))
             
@@ -139,11 +125,6 @@ function CourseGenPage() {
             
             }
             
-            onKeyDown={(e : KeyboardEvent<HTMLInputElement>) => {
-                if (!isNumberKey(e)) {
-                    e.preventDefault();
-                }
-            }}
             
             placeholder="Длительность курса" />
 

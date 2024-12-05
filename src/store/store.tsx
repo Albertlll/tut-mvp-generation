@@ -18,8 +18,9 @@ export interface IModule     {
 
 export interface ILesson {
     lessonTitle: string,
-    lessonContent: string,
-    durationMinutes: number
+    lessonDescription: string,
+    durationMinutes: number,
+    lessonContent: string
 }
 
 
