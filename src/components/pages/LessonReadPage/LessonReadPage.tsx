@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { httpClient } from "../../../api/httpClient";
 import Markdown from 'react-markdown';
 import useStore from "../../../store/store";
+import preloader from "./preloader.gif"
 
 function LessonReadPage() {
 
@@ -62,7 +63,7 @@ function LessonReadPage() {
             generating ? 
 
             <div className="w-full h-full flex items-center justify-center">
-                <img src="" alt="Тут предовадер..." />
+                <img src={preloader} alt="Тут предовадер..." />
             </div>
 
             :
