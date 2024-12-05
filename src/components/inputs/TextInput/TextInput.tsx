@@ -22,7 +22,7 @@ function TextInput(props : pr) {
             {
                 props.type === 'number' ?
 
-            <input {...props} className=" outline-none border-none placeholder:text-[#A8CCFF] w-full h-full rounded-[25px] pl-[48px] text-primary text-[25px]"
+            <input {...props} className=" outline-none border-none placeholder:text-[#A8CCFF] w-full h-full rounded-[25px] px-[48px] text-primary text-[25px]"
             
             onKeyDown={
                 
