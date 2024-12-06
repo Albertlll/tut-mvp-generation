@@ -55,7 +55,7 @@ function LessonLabel(props : {title : string, duration : number, lessonIndex : n
                 </h2>
 
                 <h2 className="text-[20px] font-medium">
-                    {props.duration}ч
+                    {props.duration}м
                 </h2>
 
             </div>

@@ -3,11 +3,13 @@ import useStore, { ICourse } from "../../../store/store";
 import { PenLine, Sparkles } from "lucide-react";
 import ChangeModulePopup from "../../popups/ChangeModule/ChangeModulePopup";
 import { httpClient } from "../../../api/httpClient";
-
+import preloader from "../../pages/LessonReadPage/preloader.gif"
 export function ModuleLabelNotGenered(props : {title: string, duration: number, moduleIndex : number}) {
 
 
     const { generatedCourse, setGeneratedCourse } = useStore();
+
+    const [coursesGenerating, setCoursesGenerating] = useState<boolean>(false);
 
     const genLessons = () => {
 
@@ -15,6 +17,7 @@ export function ModuleLabelNotGenered(props : {title: string, duration: number, 
         if (generatedCourse == null) return;
 
         console.log("Начал генерировать")
+        setCoursesGenerating(true);
 
         httpClient.post('api/v1/modules/generate/structure', 
             {
@@ -84,17 +87,21 @@ export function ModuleLabelNotGenered(props : {title: string, duration: number, 
 
     const [isSelected, setIsSelected] = useState<boolean>(false);
 
+
+    const showTools = isSelected && !coursesGenerating
+
     console.log(isSelected)
 
     return (
-        <>
 
+        <>
 
 
         <ChangeModulePopup moduleIndex={props.moduleIndex} setIsOpen={setIsChangePopupOpen} isOpen={isChangePopupOpen}/>
 
 
 
+        {/* <div className="flex justify-between flex-col gap-4 items-center"> */}
 
          <div className=" w-[70%] gap-2 flex justify-start"
                 onMouseEnter={() => {setIsSelected(true)}}
@@ -118,7 +125,7 @@ export function ModuleLabelNotGenered(props : {title: string, duration: number, 
 
             </div>
 
-            {isSelected && (
+            {showTools ?
                 <div className=" text-white flex justify-center items-center gap-3 grow-0">
                     <button onClick={() => {setIsChangePopupOpen(true)}} className="  w-[40px] h-[40px] flex bg-primary rounded-full items-center justify-center hover:bg-secondary">
                         <PenLine className=" text-white"/>
@@ -130,11 +137,23 @@ export function ModuleLabelNotGenered(props : {title: string, duration: number, 
 
 
                 </div>
-            )}
+            
+                :
 
+                
+                coursesGenerating &&
+                <div className="flex justify-center items-center gap-3 grow-0">
+                    <img src={preloader} alt="Loading..." className="h-[25px] w-[25px]"/>
+                </div>
+            }
         </div>
 
+   
+         
+        {/* </div> */}
+
         </>
+
     );
 }
 
@@ -149,7 +168,7 @@ export function ModuleLabelGenered(props : {title: string, duration: number}) {
                 </h2>
 
                 <h2 className="text-[20px] font-medium">
-                    {props.duration}ч
+                    {props.duration}
                 </h2>
 
             </div>

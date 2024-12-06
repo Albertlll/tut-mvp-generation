@@ -29,14 +29,14 @@ function GeneratedCoursePage() {
                 generatedCourse.modules.map((module, moduleIndex) => {
                     return (
                         <div key={moduleIndex} className="mb-3">
-                        <ModuleLabel moduleIndex={moduleIndex} isLessonsGenered={module.lessons.length != 0} title={module.moduleTitle} duration={12}/>
+                        <ModuleLabel moduleIndex={moduleIndex} isLessonsGenered={module.lessons.length != 0} title={module.moduleTitle} duration={module.durationHours}/>
 
                             <div className="mb-3 mt-3">
                                 {
                                     module.lessons.map((lesson, lessonIndex) => {
                                         return (
                                             <div key={lessonIndex} className="mt-2">
-                                            <LessonLabel moduleIndex={moduleIndex} lessonIndex={lessonIndex} title={lesson.lessonTitle} duration={2}/>
+                                            <LessonLabel moduleIndex={moduleIndex} lessonIndex={lessonIndex} title={lesson.lessonTitle} duration={lesson.durationMinutes}/>
 
                                             </div>
                                         )

@@ -93,12 +93,12 @@ function ChangeModulePopup(props : {isOpen : boolean, setIsOpen : React.Dispatch
             <div className='w-full flex justify-end gap-6 mt-6'>
             
             <div>
-                <Button onClick={() => {props.setIsOpen(false); saveChanges()}} text='Сохранить'/>
+                <Button generating={false} onClick={() => {props.setIsOpen(false); saveChanges()}} text='Сохранить'/>
              </div>
 
 
              <div>
-                <Button onClick={() => {props.setIsOpen(false)}} text='Отменить'/>
+                <Button generating={false} onClick={() => {props.setIsOpen(false)}} text='Отменить'/>
              </div>
 
             </div>

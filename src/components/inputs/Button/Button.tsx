@@ -1,6 +1,9 @@
 import { ButtonHTMLAttributes } from "react";
 import preloader from './preloader.gif'
-type pr =  ButtonHTMLAttributes<HTMLButtonElement> & {text : string, generating : boolean};
+type pr =  ButtonHTMLAttributes<HTMLButtonElement> & {text : string, generating: boolean};
+
+
+
 
 function Button(props : pr) {
     return (
@@ -17,7 +20,5 @@ function Button(props : pr) {
         </button>
     );
 }
-
-Button.defaultProps = {generating : false};
 
 export default Button;
